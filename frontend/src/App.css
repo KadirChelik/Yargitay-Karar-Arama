@@ -1,0 +1,357 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+  font-family: "Montserrat", serif;
+}
+
+html{
+  background-color: #212121;
+}
+
+body{
+  margin: 0;
+}
+
+h1{
+  transition: all 1s ease-in-out;
+  font-weight: 500;
+}
+
+#root{
+
+  background-color: #212121;
+}
+
+.App {
+  background-color: #212121;
+  font-family: "Montserrat", serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: white;
+  text-align: center;
+}
+
+.logo{
+  transition: width 1s ease-in-out;
+  width: 90px;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.upper-container {
+  width: 100%;
+  height: 96vh; /* Başlangıç yüksekliği */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: height 1s ease; /* Yükseklik geçişi için animasyon */
+}
+
+.upper-container.shrink {
+  height: 50vh; /* Arama yapıldıktan sonraki yüksekliği */
+}
+
+.upper-container.shrink h1 {
+  font-size: 1.5rem; /* Font boyutunu küçültmek için isteğe bağlı */
+  margin: 10px; /* Küçük margin */
+}
+
+.upper-container.shrink .logo {
+  width: 70px; /* Küçük boyut */
+}
+
+.search-form{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  background-color: #2F2F2F;
+  align-items: center;
+  border-radius: 1.5rem;
+  padding-bottom: .25rem;
+  padding-top: .25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  height: auto;
+  transition: all 0.3s ease;
+}
+
+.search-input{
+  display: flex;
+  padding-left: .6rem;
+  padding-right: .6rem;
+  margin-top: 10px;
+  background-color: #2F2F2F;
+  field-sizing: content;
+  overflow: auto;
+  width: 100%;
+  min-height: 32px;
+  max-height: 25dvh;
+  resize: none;
+  border: none;
+  font-family: "Montserrat", serif;
+  font-weight: 600;
+  color: #ccc;
+  caret-color: #ccc;
+  font-size: 16px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus{
+  outline: none;
+}
+
+.buttons{
+  height: 44px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.info-btn{
+  background-color: #2F2F2F;
+  color: #6c6b6b;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+.info-btn:hover{
+  color: #ffffff;
+}
+
+.search-btn{
+  align-items: center;
+  display: flex;
+  height: 32px;
+  width: 32px;
+  border: none;
+  border-radius: 100%;
+  background-color:  #6c6b6b;
+  color: #2F2F2F;
+  text-align: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover,.search-btn.active{
+  background-color: #ccc;
+  color: #2F2F2F;
+}
+
+dfn {
+  
+  cursor: help;
+  position: relative;
+  
+}
+dfn::after {
+  content: attr(data-info);
+  text-align: left;
+  display: inline;
+  position: absolute;
+  top: -80px; right: 30px;
+  opacity: 0;
+  width: 280px;
+  font-size: 13px;
+  line-height: 1.4em;
+  padding: 1em 2em;
+  background: #2F2F2F;
+  border-radius: 1.5rem;
+  font-weight: 600;
+  color: #ccc;
+  pointer-events: none; /* This prevents the box from apearing when hovered. */
+  transition: all 0.3s ease-in-out;
+}
+dfn::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 12px; right: 0px;
+  opacity: 0;
+  width: 0; height: 0;
+  border: solid transparent 12px;
+  border-left-color: #2F2F2F;
+  transition: all 0.3s ease-in-out;
+}
+dfn:hover {z-index: 2;} /* Keeps the info boxes on top of other elements */
+dfn:hover::after,
+dfn:hover::before {opacity: 1;}
+dfn:hover::after {top: -80px; right: 60px;}
+dfn:hover::before {top: 5px; right: 40px;}
+
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #212121;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #424242;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #676767;
+}
+
+/* Track */
+.search-input::-webkit-scrollbar-track {
+  background: #2f2f2f;
+}
+
+.rotate-icon{
+  transform: rotate(45deg);
+}
+
+
+.results{
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+  animation: results 1s ease-in-out;
+}
+
+@keyframes results { 
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.result{
+  justify-content: space-between;
+  width: 100%;
+  border: 3px solid #2F2F2F;
+  border-radius: 1.5rem;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+.index{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 600;
+  color: #ccc;
+  width: 7%;
+  height: 150px;
+  border-right: 3px solid #2F2F2F;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  transition-delay: 0.7s;
+}
+
+.index.active{
+  border-right: 3px solid #212121;
+  transition: all 0.35s ease;
+}
+
+.result-content{
+  height: 100%;
+  width: 93%;
+}
+
+.result-header{
+  height: 40px;
+  color: #C7754F;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px 0 15px;
+  font-weight: 600;
+  border-bottom: 3px solid #2f2f2f;
+}
+
+.expand-icon{
+  font-size: 25px;
+  color: #6c6b6b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  border: none;
+  background-color: #212121;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.expand-icon:hover{
+  color: #ccc;
+}
+
+.result-text {
+  overflow-x: hidden !important;
+  max-height: 300px;
+  color: #ccc;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.result-text::-webkit-scrollbar-track {
+  background: #2f2f2f;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  animation: results 1s ease-in-out;
+}
+
+.loading-spinner {
+  position: relative;
+  width: 125px;
+  aspect-ratio: 1/1;
+  border: 12px solid;
+  border-radius: 50%;
+  border-color: #C7754F transparent #C7754F transparent;
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.no-search{
+  color: #ccc;
+  height: 4vh;
+  font-size: 12px;
+}
