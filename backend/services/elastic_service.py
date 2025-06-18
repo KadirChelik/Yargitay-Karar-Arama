@@ -9,29 +9,40 @@ client = OpenSearch(
     verify_certs=True
 )
 
-def search_opensearch(query_vector):
-    # OpenSearch sorgusu
+def search_elasticsearch(query_vector):
+    # OpenSearch k-NN arama sorgusu
     os_query = {
+        "size": 10,  # En yakın 10 sonucu getir
         "query": {
-            "script_score": {
-                "query": {"match_all": {}},
-                "script": {
-                    "source": "cosineSimilarity(params.query_vector, 'vektor') + 1.0",
-                    "params": {"query_vector": query_vector}
+            "knn": {
+                "vektor": {
+                    "vector": query_vector,
+                    "k": 10  # En yakın 10 komşuyu al
                 }
             }
-        },
-        "size": 10  # En iyi eşleşen 10 sonucu getir
-    }
-    
-    # OpenSearch'ten sonuçları al
-    response = client.search(index="yargitay-kararlari", body=os_query)
-    results = [
-        {
-            "baslik": hit["_source"]["baslik"],
-            "metin": hit["_source"]["metin"],
-            "skor": hit["_score"]
         }
-        for hit in response['hits']['hits']
-    ]
-    return results
+    }
+
+    try:
+        # OpenSearch sorgusunu çalıştırma
+        response = client.search(index="yargitay-kararlari", body=os_query)
+
+        # Eğer hit bulunmazsa boş döndür
+        if response['hits']['total']['value'] == 0:
+            print("No results found.")
+            return []
+
+        # Hit'lerden sonuçları çıkarma
+        results = [
+            {
+                "baslik": hit["_source"]["baslik"],
+                "metin": hit["_source"]["metin"],
+                "skor": hit["_score"]
+            }
+            for hit in response['hits']['hits']
+        ]
+        return results
+    except Exception as e:
+        # Hata durumunda açıklama yazdır
+        print(f"OpenSearch Query Error: {e}")
+        return []

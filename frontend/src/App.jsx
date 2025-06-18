@@ -8,27 +8,44 @@ import logo from '../public/gavel-logo.png';
 const App = () => {
   const [data, setData] = useState([]);
   const [query, setQuery] = useState('');
-  const [loading, setLoading] = useState(false); // Loading durumu
-  const [shrink, setShrink] = useState(false); // Upper-container yüksekliğini kontrol eden state
+  const [loading, setLoading] = useState(false);
+  const [shrink, setShrink] = useState(false);
 
   const fetchData = async (searchQuery) => {
     setLoading(true);
     try {
-      const response = await axios.get('http://yargitaykarararamabackend.eu-north-1.elasticbeanstalk.com/api/search', {
-        params: { query: searchQuery },
-      });
-      setData(response.data);
+      const response = await axios.post(
+        'https://search-yargitay-karar-arama-search-l7mql3maj2ujdb6sbrqkizyr5y.eu-central-1.es.amazonaws.com/yargitay-kararlari/_search',
+        {
+          query: {
+            match: {
+              metin: searchQuery
+            }
+          }
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          auth: {
+            username: 'admin',
+            password: '201675K.c'
+          }
+        }
+      );
+          console.log('API cevabı:', response.data.hits.hits);
+      // Elasticsearch / OpenSearch sonuçlarının asıl verileri hits.hits dizisinde
+      setData(response.data.hits.hits);
     } catch (error) {
-      console.error('API hatası:', error);
+      console.error('OpenSearch API hatası:', error);
     } finally {
       setLoading(false);
     }
   };
-  
 
   useEffect(() => {
     if (query) {
-      setShrink(true); // Arama yapıldığında shrink state'i true
+      setShrink(true);
       fetchData(query);
     }
   }, [query]);

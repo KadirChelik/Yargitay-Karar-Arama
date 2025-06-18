@@ -58,7 +58,7 @@ h1{
 }
 
 .upper-container.shrink {
-  height: 50vh; /* Arama yapıldıktan sonraki yüksekliği */
+  height: 40vh; /* Arama yapıldıktan sonraki yüksekliği */
 }
 
 .upper-container.shrink h1 {
